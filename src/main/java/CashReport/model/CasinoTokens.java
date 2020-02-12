@@ -7,6 +7,48 @@ import javax.persistence.Id;
 
 @Entity
 public class CasinoTokens {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private int reportid;
+    private int startfives;
+    private int starttens;
+    private int starttwenties;
+    private int startfifties;
+    private int starthundreds;
+    private int startchange;
+    private int startsum;
+    private int endfives;
+    private int endtens;
+    private int endtwenties;
+    private int endfifties;
+    private int endhundreds;
+    private int endchange;
+    private int endsum;
+
+    @Override
+    public String toString() {
+        return "CasinoTokens{" +
+                "id=" + id +
+                ", reportid=" + reportid +
+                ", startfives=" + startfives +
+                ", starttens=" + starttens +
+                ", starttwenties=" + starttwenties +
+                ", startfifties=" + startfifties +
+                ", starthundreds=" + starthundreds +
+                ", startchange=" + startchange +
+                ", startsum=" + startsum +
+                ", endfives=" + endfives +
+                ", endtens=" + endtens +
+                ", endtwenties=" + endtwenties +
+                ", endfifties=" + endfifties +
+                ", endhundreds=" + endhundreds +
+                ", endchange=" + endchange +
+                ", endsum=" + endsum +
+                '}';
+    }
+
     public int getId() {
         return id;
     }
@@ -15,142 +57,123 @@ public class CasinoTokens {
         this.id = id;
     }
 
-    public int getReportId() {
-        return reportId;
+    public int getReportid() {
+        return reportid;
     }
 
-    public void setReportId(int reportId) {
-        this.reportId = reportId;
+    public void setReportid(int reportid) {
+        this.reportid = reportid;
     }
 
-    public int getStartFives() {
-        return startFives;
+    public int getStartfives() {
+        return startfives;
     }
 
-    public void setStartFives(int startFives) {
-        this.startFives = startFives;
+    public void setStartfives(int startfives) {
+        this.startfives = startfives;
     }
 
-    public int getStartTens() {
-        return startTens;
+    public int getStarttens() {
+        return starttens;
     }
 
-    public void setStartTens(int startTens) {
-        this.startTens = startTens;
+    public void setStarttens(int starttens) {
+        this.starttens = starttens;
     }
 
-    public int getStartTwenties() {
-        return startTwenties;
+    public int getStarttwenties() {
+        return starttwenties;
     }
 
-    public void setStartTwenties(int startTwenties) {
-        this.startTwenties = startTwenties;
+    public void setStarttwenties(int starttwenties) {
+        this.starttwenties = starttwenties;
     }
 
-    public int getStartFifties() {
-        return startFifties;
+    public int getStartfifties() {
+        return startfifties;
     }
 
-    public void setStartFifties(int startFifties) {
-        this.startFifties = startFifties;
+    public void setStartfifties(int startfifties) {
+        this.startfifties = startfifties;
     }
 
-    public int getStartHundreds() {
-        return startHundreds;
+    public int getStarthundreds() {
+        return starthundreds;
     }
 
-    public void setStartHundreds(int startHundreds) {
-        this.startHundreds = startHundreds;
+    public void setStarthundreds(int starthundreds) {
+        this.starthundreds = starthundreds;
     }
 
-    public int getStartChange() {
-        return startChange;
+    public int getStartchange() {
+        return startchange;
     }
 
-    public void setStartChange(int startChange) {
-        this.startChange = startChange;
+    public void setStartchange(int startchange) {
+        this.startchange = startchange;
     }
 
-    public int getStartSum() {
-        return startSum;
+    public int getStartsum() {
+        return startsum;
     }
 
-    public void setStartSum(int startSum) {
-        this.startSum = startSum;
+    public void setStartsum(int startsum) {
+        this.startsum = startsum;
     }
 
-    public int getEndFives() {
-        return endFives;
+    public int getEndfives() {
+        return endfives;
     }
 
-    public void setEndFives(int endFives) {
-        this.endFives = endFives;
+    public void setEndfives(int endfives) {
+        this.endfives = endfives;
     }
 
-    public int getEndTens() {
-        return endTens;
+    public int getEndtens() {
+        return endtens;
     }
 
-    public void setEndTens(int endTens) {
-        this.endTens = endTens;
+    public void setEndtens(int endtens) {
+        this.endtens = endtens;
     }
 
-    public int getEndTwenties() {
-        return endTwenties;
+    public int getEndtwenties() {
+        return endtwenties;
     }
 
-    public void setEndTwenties(int endTwenties) {
-        this.endTwenties = endTwenties;
+    public void setEndtwenties(int endtwenties) {
+        this.endtwenties = endtwenties;
     }
 
-    public int getEndFifties() {
-        return endFifties;
+    public int getEndfifties() {
+        return endfifties;
     }
 
-    public void setEndFifties(int endFifties) {
-        this.endFifties = endFifties;
+    public void setEndfifties(int endfifties) {
+        this.endfifties = endfifties;
     }
 
-    public int getEndHundreds() {
-        return endHundreds;
+    public int getEndhundreds() {
+        return endhundreds;
     }
 
-    public void setEndHundreds(int endHundreds) {
-        this.endHundreds = endHundreds;
+    public void setEndhundreds(int endhundreds) {
+        this.endhundreds = endhundreds;
     }
 
-    public int getEndChange() {
-        return endChange;
+    public int getEndchange() {
+        return endchange;
     }
 
-    public void setEndChange(int endChange) {
-        this.endChange = endChange;
+    public void setEndchange(int endchange) {
+        this.endchange = endchange;
     }
 
-    public int getEndSum() {
-        return endSum;
+    public int getEndsum() {
+        return endsum;
     }
 
-    public void setEndSum(int endSum) {
-        this.endSum = endSum;
+    public void setEndsum(int endsum) {
+        this.endsum = endsum;
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private int reportId;
-    private int startFives;
-    private int startTens;
-    private int startTwenties;
-    private int startFifties;
-    private int startHundreds;
-    private int startChange;
-    private int startSum;
-    private int endFives;
-    private int endTens;
-    private int endTwenties;
-    private int endFifties;
-    private int endHundreds;
-    private int endChange;
-    private int endSum;
 }

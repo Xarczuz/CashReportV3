@@ -10,12 +10,23 @@ public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int orgNr;
+    private int orgnr;
     private String name;
     private String street;
     private String city;
-    private String zipCode;
+    private String zipcode;
 
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id=" + id +
+                ", orgnr=" + orgnr +
+                ", name='" + name + '\'' +
+                ", street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", zipcode='" + zipcode + '\'' +
+                '}';
+    }
 
     public int getId() {
         return id;
@@ -25,12 +36,12 @@ public class Company {
         this.id = id;
     }
 
-    public int getOrgNr() {
-        return orgNr;
+    public int getOrgnr() {
+        return orgnr;
     }
 
-    public void setOrgNr(int orgNr) {
-        this.orgNr = orgNr;
+    public void setOrgnr(int orgnr) {
+        this.orgnr = orgnr;
     }
 
     public String getName() {
@@ -57,11 +68,11 @@ public class Company {
         this.city = city;
     }
 
-    public String getZipCode() {
-        return zipCode;
+    public String getZipcode() {
+        return zipcode;
     }
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
     }
 }

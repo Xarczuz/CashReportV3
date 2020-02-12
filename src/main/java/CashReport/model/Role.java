@@ -9,16 +9,25 @@ import javax.persistence.Id;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int roleid;
     private String role;
-    private int permissionId;
+    private int permissionid;
 
-    public int getId() {
-        return id;
+    @Override
+    public String toString() {
+        return "Role{" +
+                "roleid=" + roleid +
+                ", role='" + role + '\'' +
+                ", permissionid=" + permissionid +
+                '}';
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getRoleid() {
+        return roleid;
+    }
+
+    public void setRoleid(int roleid) {
+        this.roleid = roleid;
     }
 
     public String getRole() {
@@ -29,11 +38,11 @@ public class Role {
         this.role = role;
     }
 
-    public int getPermissionId() {
-        return permissionId;
+    public int getPermissionid() {
+        return permissionid;
     }
 
-    public void setPermissionId(int permissionId) {
-        this.permissionId = permissionId;
+    public void setPermissionid(int permissionid) {
+        this.permissionid = permissionid;
     }
 }

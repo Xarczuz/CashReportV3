@@ -9,103 +9,120 @@ import javax.persistence.Id;
 public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String gameTableName;
+    private int reportid;
+    private String gametablename;
     private String location;
-    private String employeeSign;
-    private String customerSign;
-    private Double digitalCashFlow;
-    private Double cashFlow;
+    private String employeesign;
+    private String customersign;
+    private Double digitalcashflow;
+    private Double cashflow;
     private Double revenue;
     private Double payment;
-    private String infoField;
+    private String infofield;
     private String status;
 
-        public int getId() {
-                return id;
-        }
+    @Override
+    public String toString() {
+        return "Report{" +
+                "id=" + reportid +
+                ", gametablename='" + gametablename + '\'' +
+                ", location='" + location + '\'' +
+                ", employeesign='" + employeesign + '\'' +
+                ", customersign='" + customersign + '\'' +
+                ", digitalcashflow=" + digitalcashflow +
+                ", cashflow=" + cashflow +
+                ", revenue=" + revenue +
+                ", payment=" + payment +
+                ", infofield='" + infofield + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 
-        public void setId(int id) {
-                this.id = id;
-        }
+    public int getReportid() {
+        return reportid;
+    }
 
-        public String getGameTableName() {
-                return gameTableName;
-        }
+    public void setReportid(int reportid) {
+        this.reportid = reportid;
+    }
 
-        public void setGameTableName(String gameTableName) {
-                this.gameTableName = gameTableName;
-        }
+    public String getGametablename() {
+        return gametablename;
+    }
 
-        public String getLocation() {
-                return location;
-        }
+    public void setGametablename(String gametablename) {
+        this.gametablename = gametablename;
+    }
 
-        public void setLocation(String location) {
-                this.location = location;
-        }
+    public String getLocation() {
+        return location;
+    }
 
-        public String getEmployeeSign() {
-                return employeeSign;
-        }
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
-        public void setEmployeeSign(String employeeSign) {
-                this.employeeSign = employeeSign;
-        }
+    public String getEmployeesign() {
+        return employeesign;
+    }
 
-        public String getCustomerSign() {
-                return customerSign;
-        }
+    public void setEmployeesign(String employeesign) {
+        this.employeesign = employeesign;
+    }
 
-        public void setCustomerSign(String customerSign) {
-                this.customerSign = customerSign;
-        }
+    public String getCustomersign() {
+        return customersign;
+    }
 
-        public Double getDigitalCashFlow() {
-                return digitalCashFlow;
-        }
+    public void setCustomersign(String customersign) {
+        this.customersign = customersign;
+    }
 
-        public void setDigitalCashFlow(Double digitalCashFlow) {
-                this.digitalCashFlow = digitalCashFlow;
-        }
+    public Double getDigitalcashflow() {
+        return digitalcashflow;
+    }
 
-        public Double getCashFlow() {
-                return cashFlow;
-        }
+    public void setDigitalcashflow(Double digitalcashflow) {
+        this.digitalcashflow = digitalcashflow;
+    }
 
-        public void setCashFlow(Double cashFlow) {
-                this.cashFlow = cashFlow;
-        }
+    public Double getCashflow() {
+        return cashflow;
+    }
 
-        public Double getRevenue() {
-                return revenue;
-        }
+    public void setCashflow(Double cashflow) {
+        this.cashflow = cashflow;
+    }
 
-        public void setRevenue(Double revenue) {
-                this.revenue = revenue;
-        }
+    public Double getRevenue() {
+        return revenue;
+    }
 
-        public Double getPayment() {
-                return payment;
-        }
+    public void setRevenue(Double revenue) {
+        this.revenue = revenue;
+    }
 
-        public void setPayment(Double payment) {
-                this.payment = payment;
-        }
+    public Double getPayment() {
+        return payment;
+    }
 
-        public String getInfoField() {
-                return infoField;
-        }
+    public void setPayment(Double payment) {
+        this.payment = payment;
+    }
 
-        public void setInfoField(String infoField) {
-                this.infoField = infoField;
-        }
+    public String getInfofield() {
+        return infofield;
+    }
 
-        public String getStatus() {
-                return status;
-        }
+    public void setInfofield(String infofield) {
+        this.infofield = infofield;
+    }
 
-        public void setStatus(String status) {
-                this.status = status;
-        }
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
