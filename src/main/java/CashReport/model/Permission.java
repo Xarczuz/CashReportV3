@@ -9,15 +9,23 @@ import javax.persistence.Id;
 public class Permission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int permissionid;
     private String permission;
 
-    public int getId() {
-        return id;
+    @Override
+    public String toString() {
+        return "Permission{" +
+                "permissionid=" + permissionid +
+                ", permission='" + permission + '\'' +
+                '}';
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getPermissionid() {
+        return permissionid;
+    }
+
+    public void setPermissionid(int permissionid) {
+        this.permissionid = permissionid;
     }
 
     public String getPermission() {

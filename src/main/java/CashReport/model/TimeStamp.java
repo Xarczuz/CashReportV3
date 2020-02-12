@@ -10,17 +10,27 @@ import java.util.Date;
 public class TimeStamp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int timeStampid;
     private Date checkIn;
     private Date checkout;
     private int personId;
 
-    public int getId() {
-        return id;
+    @Override
+    public String toString() {
+        return "TimeStamp{" +
+                "timeStampid=" + timeStampid +
+                ", checkIn=" + checkIn +
+                ", checkout=" + checkout +
+                ", personId=" + personId +
+                '}';
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getTimeStampid() {
+        return timeStampid;
+    }
+
+    public void setTimeStampid(int timeStampid) {
+        this.timeStampid = timeStampid;
     }
 
     public Date getCheckIn() {

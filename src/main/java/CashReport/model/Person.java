@@ -9,58 +9,71 @@ import javax.persistence.Id;
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private int RoleId;
-    private int CompanyId;
-    private String firstName;
-    private String lastName;
+    private int personid;
+    private int roleid;
+    private int companyid;
+    private String firstname;
+    private String lastname;
     private String email;
-    private String phoneNr;
+    private String phonenr;
     private String password;
     private String username;
     private String salt;
 
-    public Person() {
+    @Override
+    public String toString() {
+        return "Person{" +
+                "personid=" + personid +
+                ", roleid=" + roleid +
+                ", companyid=" + companyid +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", phonenr='" + phonenr + '\'' +
+                ", password='" + password + '\'' +
+                ", username='" + username + '\'' +
+                ", salt='" + salt + '\'' +
+                '}';
     }
 
-    public int getId() {
-        return id;
+    public int getPersonid() {
+        return personid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPersonid(int personid) {
+        this.personid = personid;
     }
 
-    public int getRoleId() {
-        return RoleId;
+    public int getRoleid() {
+        return roleid;
     }
 
-    public void setRoleId(int roleId) {
-        RoleId = roleId;
+    public void setRoleid(int roleid) {
+        this.roleid = roleid;
     }
 
-    public int getCompanyId() {
-        return CompanyId;
+    public int getCompanyid() {
+        return companyid;
     }
 
-    public void setCompanyId(int companyId) {
-        CompanyId = companyId;
+    public void setCompanyid(int companyid) {
+        this.companyid = companyid;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getEmail() {
@@ -71,12 +84,12 @@ public class Person {
         this.email = email;
     }
 
-    public String getPhoneNr() {
-        return phoneNr;
+    public String getPhonenr() {
+        return phonenr;
     }
 
-    public void setPhoneNr(String phoneNr) {
-        this.phoneNr = phoneNr;
+    public void setPhonenr(String phonenr) {
+        this.phonenr = phonenr;
     }
 
     public String getPassword() {
@@ -101,22 +114,6 @@ public class Person {
 
     public void setSalt(String salt) {
         this.salt = salt;
-    }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", RoleId=" + RoleId +
-                ", CompanyId=" + CompanyId +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNr='" + phoneNr + '\'' +
-                ", password='" + password + '\'' +
-                ", username='" + username + '\'' +
-                ", salt='" + salt + '\'' +
-                '}';
     }
 }
 
