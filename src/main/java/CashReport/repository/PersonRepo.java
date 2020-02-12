@@ -3,5 +3,8 @@ package CashReport.repository;
 import CashReport.model.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PersonRepo extends JpaRepository<Person,Integer> {
+import java.util.Optional;
+
+public interface PersonRepo extends JpaRepository<Person, Integer> {
+    Optional<Person> findByUsername(String userName);
 }
