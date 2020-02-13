@@ -1,7 +1,7 @@
 package CashReport.Auth;
 
-import CashReport.model.Person;
-import CashReport.repository.PersonRepo;
+import CashReport.model.UserAccount;
+import CashReport.repository.UserRepo;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,24 +10,23 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.Optional;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
-
-    private final PersonRepo personRepo;
-
-    public UserDetailsServiceImpl(PersonRepo personRepo) {
-        this.personRepo = personRepo;
+    public UserDetailsServiceImpl(UserRepo userRepo) {
+        this.userRepo = userRepo;
     }
+
+    private UserRepo userRepo;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        Optional<Person> user = personRepo.findByUsername(userName);
+        Optional<UserAccount> user = userRepo.findByUsername(userName);
         user.orElseThrow(() -> new UsernameNotFoundException(userName + " not found."));
 
         return toUserDetails(user.get());
     }
 
-    private UserDetails toUserDetails(Person person) {
-        return User.withUsername(person.getUsername())
-                .password(person.getPassword())
-                .roles(String.valueOf(person.getRoleid())).build();
+    private UserDetails toUserDetails(UserAccount userAccount) {
+        return User.withUsername(userAccount.getUsername())
+                .password(userAccount.getPassword())
+                .roles(userAccount.getRole()).build();
     }
 }

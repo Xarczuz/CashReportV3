@@ -1,6 +1,6 @@
 package CashReport.Auth;
 
-import CashReport.repository.PersonRepo;
+import CashReport.repository.UserRepo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -21,10 +21,10 @@ import javax.servlet.http.Cookie;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final PersonRepo personRepo;
+    private UserRepo userRepo;
 
-    public ApplicationSecurityConfig(PersonRepo personRepo) {
-        this.personRepo = personRepo;
+    public ApplicationSecurityConfig(UserRepo userRepo) {
+        this.userRepo = userRepo;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new UserDetailsServiceImpl(personRepo);
+        return new UserDetailsServiceImpl(userRepo);
     }
 
     @Bean
