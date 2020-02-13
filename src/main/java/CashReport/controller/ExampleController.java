@@ -16,6 +16,7 @@ public class ExampleController {
 
     @GetMapping("person")
     public List<Person> getPerson(){
-       return personRepo.findAll();
+
+        return personRepo.findAll();
     }
 }
