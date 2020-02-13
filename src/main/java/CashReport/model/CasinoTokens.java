@@ -84,7 +84,6 @@ public class CasinoTokens {
     public int getStarttwenties() {
         return starttwenties;
     }
-
     public void setStarttwenties(int starttwenties) {
         this.starttwenties = starttwenties;
     }

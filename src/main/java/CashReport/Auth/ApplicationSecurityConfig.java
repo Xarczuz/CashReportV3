@@ -1,6 +1,6 @@
 package CashReport.Auth;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import CashReport.repository.PersonRepo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,33 +9,32 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private UserDetailsService userDetailsService;
+
+    private final PersonRepo personRepo;
+
+    public ApplicationSecurityConfig(PersonRepo personRepo) {
+        this.personRepo = personRepo;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(userDetailsService());
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new UserDetailsServiceImpl();
+        return new UserDetailsServiceImpl(personRepo);
     }
 
     @Bean
@@ -50,28 +49,20 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/person").hasRole("1")
-                .anyRequest()
-                .authenticated()
-                .and()
                 .formLogin()
                 .successHandler(successHandler())
-                .and().logout().deleteCookies()
-        ;
+                .and().logout().deleteCookies();
     }
 
     private AuthenticationSuccessHandler successHandler() {
-        return new AuthenticationSuccessHandler() {
-            @Override
-            public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-                httpServletResponse.getWriter().append("OK");
-                httpServletResponse.setStatus(200);
-                httpServletResponse.addCookie(new Cookie("role", authentication.getAuthorities().stream().findAny().toString()));
-            }
+        return (httpServletRequest, httpServletResponse, authentication) -> {
+            StringBuilder stringBuilder = new StringBuilder();
+            authentication.getAuthorities().forEach(o -> stringBuilder.append(o.getAuthority()));
+            httpServletResponse.getWriter().append("OK");
+            httpServletResponse.setStatus(200);
+            httpServletResponse.addCookie(new Cookie("role", stringBuilder.toString()));
         };
     }
-
 }
 
 //public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {

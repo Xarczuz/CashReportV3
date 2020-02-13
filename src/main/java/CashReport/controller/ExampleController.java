@@ -2,7 +2,7 @@ package CashReport.controller;
 
 import CashReport.model.Person;
 import CashReport.repository.PersonRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,12 +11,15 @@ import java.util.List;
 @RestController
 public class ExampleController {
 
-    @Autowired
-    PersonRepo personRepo;
+    final PersonRepo personRepo;
+
+    public ExampleController(PersonRepo personRepo) {
+        this.personRepo = personRepo;
+    }
 
     @GetMapping("person")
-    public List<Person> getPerson(){
-
+    @PreAuthorize("hasRole('ROLE_1')")
+    public List<Person> getPerson() {
         return personRepo.findAll();
     }
 }
