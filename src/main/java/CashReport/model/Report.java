@@ -14,17 +14,17 @@ public class Report {
     private String location;
     private String employeesign;
     private String customersign;
-    private Double digitalcashflow;
-    private Double cashflow;
-    private Double revenue;
-    private Double payment;
+    private double digitalcashflow;
+    private double cashflow;
+    private double revenue;
+    private double payment;
     private String infofield;
     private String status;
 
     @Override
     public String toString() {
         return "Report{" +
-                "id=" + reportid +
+                "reportid=" + reportid +
                 ", gametablename='" + gametablename + '\'' +
                 ", location='" + location + '\'' +
                 ", employeesign='" + employeesign + '\'' +
@@ -78,35 +78,35 @@ public class Report {
         this.customersign = customersign;
     }
 
-    public Double getDigitalcashflow() {
+    public double getDigitalcashflow() {
         return digitalcashflow;
     }
 
-    public void setDigitalcashflow(Double digitalcashflow) {
+    public void setDigitalcashflow(double digitalcashflow) {
         this.digitalcashflow = digitalcashflow;
     }
 
-    public Double getCashflow() {
+    public double getCashflow() {
         return cashflow;
     }
 
-    public void setCashflow(Double cashflow) {
+    public void setCashflow(double cashflow) {
         this.cashflow = cashflow;
     }
 
-    public Double getRevenue() {
+    public double getRevenue() {
         return revenue;
     }
 
-    public void setRevenue(Double revenue) {
+    public void setRevenue(double revenue) {
         this.revenue = revenue;
     }
 
-    public Double getPayment() {
+    public double getPayment() {
         return payment;
     }
 
-    public void setPayment(Double payment) {
+    public void setPayment(double payment) {
         this.payment = payment;
     }
 
