@@ -7,7 +7,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("customer")
@@ -25,9 +24,9 @@ public class CustomerController {
     }
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Optional<CustomerDetails> getCustomer(@PathVariable ("id") int id) {
+    public CustomerDetails getCustomer(@PathVariable ("id") int id) {
 
-        return customerDetailsRepo.findById(id);
+        return customerDetailsRepo.findById(id).get();
     }
     @GetMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
