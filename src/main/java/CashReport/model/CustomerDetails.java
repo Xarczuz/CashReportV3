@@ -2,14 +2,15 @@ package CashReport.model;
 
 import org.hibernate.annotations.Immutable;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "customerdetails")
 @Immutable
 public class CustomerDetails {
     @Id
-
     private int personid;
     private String role;
     private String fullname;
