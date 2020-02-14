@@ -22,6 +22,7 @@ public class CompanyController {
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void addCompany() {
+
     }
 
     @GetMapping("")
@@ -33,7 +34,6 @@ public class CompanyController {
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public CompanyModel getCompany(@PathVariable("id") int id) {
-
         return companyRepo.findById(id).get();
     }
 
@@ -45,7 +45,13 @@ public class CompanyController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void updateCompany(@PathVariable("id") int id) {
-
+    public void updateCompany(@RequestBody CompanyModel companyModel) {
+        CompanyModel companyModelOne = companyRepo.getOne(companyModel.getCompanyid());
+        companyModelOne.setCompany(companyModel.getCompany());
+        companyModelOne.setOrgnr(companyModel.getOrgnr());
+        companyModelOne.setStreet(companyModel.getStreet());
+        companyModelOne.setCity(companyModel.getCity());
+        companyModelOne.setZipcode(companyModel.getZipcode());
+        companyRepo.save(companyModelOne);
     }
 }

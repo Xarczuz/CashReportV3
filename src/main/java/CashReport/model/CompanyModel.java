@@ -26,12 +26,12 @@ public class CompanyModel {
                 '}';
     }
 
-    public int getId() {
+    public int getCompanyid() {
         return companyid;
     }
 
-    public void setId(int id) {
-        this.companyid = id;
+    public void setCompanyid(int companyid) {
+        this.companyid = companyid;
     }
 
     public int getOrgnr() {
@@ -42,12 +42,12 @@ public class CompanyModel {
         this.orgnr = orgnr;
     }
 
-    public String getName() {
+    public String getCompany() {
         return company;
     }
 
-    public void setName(String name) {
-        this.company = name;
+    public void setCompany(String company) {
+        this.company = company;
     }
 
     public String getStreet() {
