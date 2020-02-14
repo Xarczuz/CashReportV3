@@ -32,7 +32,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService());
     }
 
-
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl(userRepo);
@@ -52,7 +51,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .formLogin()
                 .successHandler(successHandler())
-                .and().logout().deleteCookies();
+                .and().logout().deleteCookies()
+                .and()
+                .httpBasic();
     }
 
     private AuthenticationSuccessHandler successHandler() {
