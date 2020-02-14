@@ -32,6 +32,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService());
     }
 
+
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl(userRepo);
