@@ -1,11 +1,17 @@
 package CashReport.controller;
 
 import CashReport.model.EmployeeDetails;
+import CashReport.model.Person;
 import CashReport.repository.EmployeeDetailsRepo;
+import CashReport.repository.PersonRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
+import java.sql.*;
+
+import java.beans.Statement;
 import java.util.List;
 
 
@@ -19,7 +25,6 @@ import java.util.List;
         @PostMapping("")
         @PreAuthorize("hasRole('ROLE_ADMIN')")
         public void addEmployee() {
-
         }
 
         @GetMapping("/{id}")
@@ -46,4 +51,5 @@ import java.util.List;
         public void updateEmployee(@PathVariable("id") int id) {
 
         }
+
     }

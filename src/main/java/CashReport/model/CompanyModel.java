@@ -1,17 +1,15 @@
 package CashReport.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-public class Company {
+@Table(name = "company")
+public class CompanyModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int companyid;
     private int orgnr;
-    private String name;
+    private String company;
     private String street;
     private String city;
     private String zipcode;
@@ -19,9 +17,9 @@ public class Company {
     @Override
     public String toString() {
         return "Company{" +
-                "id=" + id +
+                "id=" + companyid +
                 ", orgnr=" + orgnr +
-                ", name='" + name + '\'' +
+                ", name='" + company + '\'' +
                 ", street='" + street + '\'' +
                 ", city='" + city + '\'' +
                 ", zipcode='" + zipcode + '\'' +
@@ -29,11 +27,11 @@ public class Company {
     }
 
     public int getId() {
-        return id;
+        return companyid;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.companyid = id;
     }
 
     public int getOrgnr() {
@@ -45,11 +43,11 @@ public class Company {
     }
 
     public String getName() {
-        return name;
+        return company;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.company = name;
     }
 
     public String getStreet() {

@@ -1,6 +1,6 @@
 package CashReport.model;
 
-import jdk.nashorn.internal.ir.annotations.Immutable;
+import org.hibernate.annotations.Immutable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
