@@ -1,18 +1,24 @@
 package CashReport.Auth;
 
+import CashReport.config.CorsFilter;
 import CashReport.repository.UserRepo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
+import org.springframework.security.web.session.SessionManagementFilter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.servlet.http.Cookie;
 
@@ -46,14 +52,30 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
     }
 
-    @Override
+    @Bean
+    CorsFilter corsFilter() {
+        CorsFilter filter = new CorsFilter();
+        return filter;
+    }
+
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .formLogin()
-                .successHandler(successHandler())
-                .and().logout().deleteCookies()
-                .and()
-                .httpBasic();
+        System.out.println("Im configuring it");
+        (
+                (HttpSecurity)
+                        (
+                                (HttpSecurity)
+                                        (
+                                                (ExpressionUrlAuthorizationConfigurer.AuthorizedUrl)
+                                                        http
+                                                                .headers().addHeaderWriter(
+                                                                new StaticHeadersWriter("Access-Control-Allow-Origin", "*")).and()
+                                                                .addFilterBefore(corsFilter(), SessionManagementFilter.class).csrf().disable()
+                                                                .authorizeRequests()
+                                                                .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+                                                                .anyRequest()
+                                        ).authenticated().and()
+                        ).formLogin().successHandler(successHandler()).and()
+        ).httpBasic();
     }
 
     private AuthenticationSuccessHandler successHandler() {
