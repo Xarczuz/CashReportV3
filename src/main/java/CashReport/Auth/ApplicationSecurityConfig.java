@@ -61,7 +61,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         System.out.println("Im configuring it");
         (
-                (HttpSecurity)
                         (
                                 (HttpSecurity)
                                         (
@@ -75,9 +74,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                                                                 .anyRequest()
                                         ).authenticated().and()
                         ).formLogin().successHandler(successHandler()).and()
-        ).httpBasic();
+        ).logout().logoutUrl("/logout").logoutSuccessUrl("/login").deleteCookies("role", "JSESSIONID").invalidateHttpSession(true).permitAll();
     }
-
+//            .logout().logoutUrl("/logout").logoutSuccessUrl("/login").deleteCookies("auth_code").invalidateHttpSession(true)
     private AuthenticationSuccessHandler successHandler() {
         return (httpServletRequest, httpServletResponse, authentication) -> {
             StringBuilder stringBuilder = new StringBuilder();
