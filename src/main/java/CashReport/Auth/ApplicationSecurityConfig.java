@@ -83,7 +83,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
             authentication.getAuthorities().forEach(o -> stringBuilder.append(o.getAuthority()));
             httpServletResponse.getWriter().append("OK");
             httpServletResponse.setStatus(200);
-            httpServletResponse.addCookie(new Cookie("role", stringBuilder.toString()));
         };
     }
 }
