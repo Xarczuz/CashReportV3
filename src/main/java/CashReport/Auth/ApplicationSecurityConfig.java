@@ -59,22 +59,23 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     protected void configure(HttpSecurity http) throws Exception {
-        System.out.println("Im configuring it");
-        (
-                        (
-                                (HttpSecurity)
-                                        (
-                                                (ExpressionUrlAuthorizationConfigurer.AuthorizedUrl)
-                                                        http
-                                                                .headers().addHeaderWriter(
-                                                                new StaticHeadersWriter("Access-Control-Allow-Origin", "*")).and()
-                                                                .addFilterBefore(corsFilter(), SessionManagementFilter.class).csrf().disable()
-                                                                .authorizeRequests()
-                                                                .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-                                                                .anyRequest()
-                                        ).authenticated().and()
-                        ).formLogin().successHandler(successHandler()).and()
-        ).logout().logoutUrl("/logout").logoutSuccessUrl("/login").deleteCookies("role", "JSESSIONID").invalidateHttpSession(true).permitAll();
+        http.authorizeRequests()
+                .antMatchers("/login")
+                .permitAll()
+                .antMatchers("/").permitAll().and()
+                .formLogin()
+                .loginPage("/login")
+                .failureUrl("/login?error=true")
+                .permitAll()
+                .and()
+                .logout()
+                .logoutSuccessUrl("/login?logout=true")
+                .invalidateHttpSession(true)
+                .permitAll().deleteCookies("JSESSIONID")
+                .and()
+                .csrf().disable()
+                .httpBasic().disable();
+
     }
 //            .logout().logoutUrl("/logout").logoutSuccessUrl("/login").deleteCookies("auth_code").invalidateHttpSession(true)
     private AuthenticationSuccessHandler successHandler() {
