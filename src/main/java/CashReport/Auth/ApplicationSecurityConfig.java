@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -51,6 +52,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
+        web.ignoring();
     }
 
     @Bean
@@ -60,7 +62,14 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.authorizeRequests().anyRequest().authenticated().and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.NEVER).and()
+                .logout()
+                .logoutSuccessUrl("/login?logout=true")
+                .invalidateHttpSession(true)
+                .permitAll().deleteCookies("JSESSIONID");
+
+       /* http.authorizeRequests()
                 .antMatchers("/login")
                 .permitAll()
                 .antMatchers("/").permitAll().and()
@@ -75,7 +84,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().deleteCookies("JSESSIONID")
                 .and()
                 .csrf().disable()
-                .httpBasic().disable();
+                .httpBasic().disable();*/
 
     }
 //            .logout().logoutUrl("/logout").logoutSuccessUrl("/login").deleteCookies("auth_code").invalidateHttpSession(true)
