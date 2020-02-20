@@ -4,7 +4,6 @@ import CashReport.config.CorsFilter;
 import CashReport.repository.UserRepo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -12,17 +11,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.header.writers.StaticHeadersWriter;
-import org.springframework.security.web.session.SessionManagementFilter;
-import org.springframework.web.bind.annotation.CrossOrigin;
-
-import javax.servlet.http.Cookie;
 
 @Configuration
 @EnableWebSecurity
@@ -52,7 +45,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring();
+        //  web.ignoring();
     }
 
     @Bean
@@ -87,7 +80,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().disable();*/
 
     }
-//            .logout().logoutUrl("/logout").logoutSuccessUrl("/login").deleteCookies("auth_code").invalidateHttpSession(true)
+
+    //            .logout().logoutUrl("/logout").logoutSuccessUrl("/login").deleteCookies("auth_code").invalidateHttpSession(true)
     private AuthenticationSuccessHandler successHandler() {
         return (httpServletRequest, httpServletResponse, authentication) -> {
             StringBuilder stringBuilder = new StringBuilder();
@@ -96,6 +90,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
             httpServletResponse.setStatus(200);
         };
     }
+
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {

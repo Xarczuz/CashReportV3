@@ -1,11 +1,10 @@
 package CashReport.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
@@ -54,10 +53,14 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
             "6QIDAQAB\n" +
             "-----END PUBLIC KEY-----\n";
 
+    final
+    UserDetailsService userDetailsService;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    @Qualifier("authenticationManagerBean")
-    private AuthenticationManager authenticationManager;
+    public OAuth2Config(@Qualifier("authenticationManagerBean") AuthenticationManager authenticationManager, UserDetailsService userDetailsService) {
+        this.authenticationManager = authenticationManager;
+        this.userDetailsService = userDetailsService;
+    }
 
     @Bean
     public JwtAccessTokenConverter tokenEnhancer() {
@@ -66,19 +69,23 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
         converter.setVerifierKey(publicKey);
         return converter;
     }
+
     @Bean
     public JwtTokenStore tokenStore() {
         return new JwtTokenStore(tokenEnhancer());
     }
+
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.authenticationManager(authenticationManager).tokenStore(tokenStore())
-                .accessTokenConverter(tokenEnhancer());
+                .accessTokenConverter(tokenEnhancer()).userDetailsService(userDetailsService);
     }
+
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
     }
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         System.out.println("Kommer jag hit, daniel");
@@ -86,6 +93,6 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
                 .authorizedGrantTypes("password", "refresh_token").accessTokenValiditySeconds(20000)
                 .refreshTokenValiditySeconds(20000);
 
-
     }
+
 }
