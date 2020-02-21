@@ -1,10 +1,10 @@
 package CashReport.Auth;
 
 import CashReport.repository.UserRepo;
+
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -16,14 +16,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.Arrays;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -54,56 +50,26 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        //  web.ignoring();
+
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-        configuration.addAllowedOrigin("*");
-        configuration.addAllowedHeader("*");
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTION", "PUT"));
+    @Bean(value = "org.springframework.web.filter.CorsFilter")
+    public FilterRegistrationBean corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", config);
+        FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
+        bean.setOrder(0);
+        return bean;
     }
 
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests().antMatchers("/**").permitAll().anyRequest().authenticated().and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.NEVER).and()
-                .logout()
-                .logoutSuccessUrl("/login?logout=true")
-                .invalidateHttpSession(true)
-                .permitAll().deleteCookies("JSESSIONID");
-
-       /* http.authorizeRequests()
-                .antMatchers("/login")
-                .permitAll()
-                .antMatchers("/").permitAll().and()
-                .formLogin()
-                .loginPage("/login")
-                .failureUrl("/login?error=true")
-                .permitAll()
-                .and()
-                .logout()
-                .logoutSuccessUrl("/login?logout=true")
-                .invalidateHttpSession(true)
-                .permitAll().deleteCookies("JSESSIONID")
-                .and()
-                .csrf().disable()
-                .httpBasic().disable();*/
-
-    }
-
-    //            .logout().logoutUrl("/logout").logoutSuccessUrl("/login").deleteCookies("auth_code").invalidateHttpSession(true)
-    private AuthenticationSuccessHandler successHandler() {
-        return (httpServletRequest, httpServletResponse, authentication) -> {
-            StringBuilder stringBuilder = new StringBuilder();
-            authentication.getAuthorities().forEach(o -> stringBuilder.append(o.getAuthority()));
-            httpServletResponse.getWriter().append("OK");
-            httpServletResponse.setStatus(200);
-        };
+                .sessionCreationPolicy(SessionCreationPolicy.NEVER);
     }
 
     @Override
@@ -112,61 +78,3 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 }
-
-//public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
-//
-//    private final PasswordEncoder passwordEncoder;
-//    private final ApplicationUserService applicationUserService;
-//
-//    @Autowired
-//    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder,
-//                                     ApplicationUserService applicationUserService) {
-//        this.passwordEncoder = passwordEncoder;
-//        this.applicationUserService = applicationUserService;
-//    }
-//
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .csrf().disable()
-//                .authorizeRequests()
-//                .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
-//                .antMatchers("/api/**").hasRole(STUDENT.name())
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .formLogin()
-//                    .loginPage("/login")
-//                    .permitAll()
-//                    .defaultSuccessUrl("/courses", true)
-//                    .passwordParameter("password")
-//                    .usernameParameter("username")
-//                .and()
-//                .rememberMe()
-//                    .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21))
-//                    .key("somethingverysecured")
-//                    .rememberMeParameter("remember-me")
-//                .and()
-//                .logout()
-//                    .logoutUrl("/logout")
-//                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")) // https://docs.spring.io/spring-security/site/docs/4.2.12.RELEASE/apidocs/org/springframework/security/config/annotation/web/configurers/LogoutConfigurer.html
-//                    .clearAuthentication(true)
-//                    .invalidateHttpSession(true)
-//                    .deleteCookies("JSESSIONID", "remember-me")
-//                    .logoutSuccessUrl("/login");
-//    }
-//
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.authenticationProvider(daoAuthenticationProvider());
-//    }
-//
-//    @Bean
-//    public DaoAuthenticationProvider daoAuthenticationProvider() {
-//        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-//        provider.setPasswordEncoder(passwordEncoder);
-//        provider.setUserDetailsService(applicationUserService);
-//        return provider;
-//    }
-//
-//}
