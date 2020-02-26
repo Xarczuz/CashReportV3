@@ -1,4 +1,4 @@
-package CashReport.controller;
+package CashReport.controller.crud;
 
 import CashReport.model.Report;
 import CashReport.repository.ReportRepo;

@@ -1,6 +1,6 @@
-package CashReport.controller;
+package CashReport.controller.view;
 
-import CashReport.model.CustomerDetails;
+import CashReport.model.CustomerView;
 import CashReport.repository.CustomerDetailsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,15 +22,17 @@ public class CustomerController {
     public void addCustomer() {
 
     }
+
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public CustomerDetails getCustomer(@PathVariable ("id") int id) {
+    public CustomerView getCustomer(@PathVariable("id") int id) {
 
         return customerDetailsRepo.findById(id).get();
     }
+
     @GetMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<CustomerDetails> getAllCustomers() {
+    public List<CustomerView> getAllCustomers() {
 
         return customerDetailsRepo.findAll();
     }

@@ -1,8 +1,6 @@
-package CashReport.controller;
-
+package CashReport.controller.crud;
 
 import CashReport.model.Person;
-import CashReport.model.Report;
 import CashReport.repository.PersonRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,19 +17,19 @@ public class PersonController {
 
     @GetMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<Person> getAllPerson(){
+    public List<Person> getAllPerson() {
         return personRepo.findAll();
     }
 
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Person addPerson(@RequestBody Person person){
+    public Person addPerson(@RequestBody Person person) {
         return personRepo.save(person);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deletePerson(@PathVariable("id") int id){
+    public void deletePerson(@PathVariable("id") int id) {
         personRepo.deleteById(id);
     }
 

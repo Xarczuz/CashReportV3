@@ -9,7 +9,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "employeedetails")
 @Immutable
-public class EmployeeDetails {
+public class EmployeeView {
     @Id
     private int personid;
     private String email;
