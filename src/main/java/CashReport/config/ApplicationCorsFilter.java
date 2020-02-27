@@ -22,9 +22,9 @@ class ApplicationCorsFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
         HttpServletRequest request = (HttpServletRequest) req;
         response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Allow-Methods", "*");
         response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with, authorization, cache-control");
+        response.setHeader("Access-Control-Allow-Headers", "x-requested-with, authorization, cache-control, content-type");
 
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);
