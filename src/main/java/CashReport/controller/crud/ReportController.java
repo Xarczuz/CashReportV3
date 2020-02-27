@@ -1,8 +1,10 @@
 package CashReport.controller.crud;
 
+import CashReport.controller.service.ReportControllerService;
 import CashReport.model.Report;
 import CashReport.repository.ReportRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +18,12 @@ import java.util.List;
 public class ReportController {
 
     @Autowired
-    ReportRepo reportRepo;
+    ReportControllerService reportControllerService;
 
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Report> addReport(Report report) {
-        Report tmpReport = reportRepo.save(report);
+        Report tmpReport = reportControllerService.addReport(report);
         String template = "/report/{id}";
         UriComponents uriComponents = UriComponentsBuilder.fromUriString(template).buildAndExpand(tmpReport.getReportid());
         return ResponseEntity.created(uriComponents.toUri()).build();
@@ -29,37 +31,27 @@ public class ReportController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Report getReport(@PathVariable("id") int id) {
-        return reportRepo.findById(id).get();
+    public ResponseEntity<Report> getReport(@PathVariable("id") int id) {
+        return ResponseEntity.status(HttpStatus.OK).body(reportControllerService.getReport(id));
     }
 
     @GetMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<Report> getAllReports() {
-        return reportRepo.findAll();
+    public ResponseEntity<List<Report>> getAllReports() {
+        return ResponseEntity.status(HttpStatus.OK).body(reportControllerService.getAllReports());
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteReport(@PathVariable("id") int id) {
-        reportRepo.deleteById(id);
+        reportControllerService.deleteReport(id);
     }
 
     @PutMapping("")
+    @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void updateReport(@RequestBody Report report) {
-        Report report1 = reportRepo.getOne(report.getReportid());
-        report1.setCustomersign(report.getCustomersign());
-        report1.setEmployeesign(report.getEmployeesign());
-        report1.setGametablename(report.getGametablename());
-        report1.setCashflow(report.getCashflow());
-        report1.setDigitalcashflow(report.getDigitalcashflow());
-        report1.setPayment(report.getPayment());
-        report1.setRevenue(report.getRevenue());
-        report1.setLocation(report.getLocation());
-        report1.setInfofield(report.getInfofield());
-        report1.setStatus(report.getStatus());
-        reportRepo.save(report1);
-
+        reportControllerService.updateReport(report);
     }
 }
