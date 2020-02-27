@@ -13,4 +13,6 @@ public interface PersonControllerService {
     void deletePerson(int id);
 
     Person updatePerson(Person person);
+
+    Person getPerson(int id);
 }

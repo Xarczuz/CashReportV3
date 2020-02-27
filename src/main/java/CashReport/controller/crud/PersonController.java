@@ -25,6 +25,12 @@ public class PersonController {
         return ResponseEntity.status(HttpStatus.OK).body(personControllerService.getAllPerson());
     }
 
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Person> getAllPerson(@PathVariable("id") int id) {
+        return ResponseEntity.status(HttpStatus.OK).body(personControllerService.getPerson(id));
+    }
+
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Person> addPerson(@RequestBody Person person) {
