@@ -5,13 +5,13 @@ import CashReport.model.Company;
 import CashReport.repository.CompanyRepo;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
 public class CompanyControllerServiceImpl implements CompanyControllerService {
 
-    final
-    CompanyRepo companyRepo;
+    private final CompanyRepo companyRepo;
 
     public CompanyControllerServiceImpl(CompanyRepo companyRepo) {
         this.companyRepo = companyRepo;
@@ -39,12 +39,18 @@ public class CompanyControllerServiceImpl implements CompanyControllerService {
 
     @Override
     public void updateCompany(Company company) {
-        Company companyOne = companyRepo.getOne(company.getCompanyid());
-        companyOne.setCompany(company.getCompany());
-        companyOne.setOrgnr(company.getOrgnr());
-        companyOne.setStreet(company.getStreet());
-        companyOne.setCity(company.getCity());
-        companyOne.setZipcode(company.getZipcode());
-        companyRepo.save(companyOne);
+        try {
+            Company companyOne = companyRepo.getOne(company.getCompanyid());
+            companyOne.setCompany(company.getCompany());
+            companyOne.setOrgnr(company.getOrgnr());
+            companyOne.setStreet(company.getStreet());
+            companyOne.setCity(company.getCity());
+            companyOne.setZipcode(company.getZipcode());
+            companyRepo.save(companyOne);
+
+        } catch (EntityNotFoundException e) {
+
+        }
+
     }
 }

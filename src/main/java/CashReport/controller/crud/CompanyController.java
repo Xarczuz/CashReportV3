@@ -2,7 +2,6 @@ package CashReport.controller.crud;
 
 import CashReport.controller.service.impl.CompanyControllerServiceImpl;
 import CashReport.model.Company;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,8 +15,11 @@ import java.util.List;
 @RequestMapping("company")
 public class CompanyController {
 
-    @Autowired
-    CompanyControllerServiceImpl companyControllerServiceImpl;
+    final CompanyControllerServiceImpl companyControllerServiceImpl;
+
+    public CompanyController(CompanyControllerServiceImpl companyControllerServiceImpl) {
+        this.companyControllerServiceImpl = companyControllerServiceImpl;
+    }
 
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")

@@ -1,12 +1,12 @@
 package CashReport.controller.service;
 
 import CashReport.model.Person;
-import org.springframework.web.util.UriComponents;
 
+import java.net.URI;
 import java.util.List;
 
 public interface PersonControllerService {
-    UriComponents addPerson(Person person);
+    URI addPerson(Person person);
 
     List<Person> getAllPerson();
 

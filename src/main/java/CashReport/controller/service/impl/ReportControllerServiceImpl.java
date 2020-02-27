@@ -3,21 +3,14 @@ package CashReport.controller.service.impl;
 import CashReport.controller.service.ReportControllerService;
 import CashReport.model.Report;
 import CashReport.repository.ReportRepo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
 @Service
 public class ReportControllerServiceImpl implements ReportControllerService {
 
-    final
-    ReportRepo reportRepo;
+    private final ReportRepo reportRepo;
 
     public ReportControllerServiceImpl(ReportRepo reportRepo) {
         this.reportRepo = reportRepo;
@@ -37,6 +30,7 @@ public class ReportControllerServiceImpl implements ReportControllerService {
     public List<Report> getAllReports() {
         return reportRepo.findAll();
     }
+
     @Override
     public void deleteReport(int id) {
         reportRepo.deleteById(id);
