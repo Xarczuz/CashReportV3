@@ -27,7 +27,7 @@ public class PersonController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<Person> getAllPerson(@PathVariable("id") int id) {
+    public ResponseEntity<Person> getPerson(@PathVariable("id") int id) {
         return ResponseEntity.status(HttpStatus.OK).body(personControllerService.getPerson(id));
     }
 
