@@ -28,7 +28,7 @@ public class PersonController {
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Person> addPerson(@RequestBody Person person) {
-        return ResponseEntity.status(HttpStatus.OK).location(personControllerService.addPerson(person)).build();
+        return ResponseEntity.status(HttpStatus.CREATED).location(personControllerService.addPerson(person)).build();
     }
 
     @DeleteMapping("/{id}")
