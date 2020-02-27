@@ -51,4 +51,9 @@ public class PersonControllerServiceImpl implements
 
         return personRepo.save(person1);
     }
+
+    @Override
+    public Person getPerson(int id) {
+        return personRepo.findById(id).get();
+    }
 }

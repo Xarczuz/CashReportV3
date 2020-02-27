@@ -37,7 +37,7 @@ public class RoleController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize(("has('ROLE_ADMIN')"))
+    @PreAuthorize(("hasRole('ROLE_ADMIN')"))
     public Role updateRole(Role role) {
         Role role1 = new Role();
         role1.setRoleid(role.getRoleid());

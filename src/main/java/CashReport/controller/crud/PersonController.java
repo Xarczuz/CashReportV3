@@ -25,10 +25,16 @@ public class PersonController {
         return ResponseEntity.status(HttpStatus.OK).body(personControllerService.getAllPerson());
     }
 
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Person> getAllPerson(@PathVariable("id") int id) {
+        return ResponseEntity.status(HttpStatus.OK).body(personControllerService.getPerson(id));
+    }
+
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Person> addPerson(@RequestBody Person person) {
-        return ResponseEntity.status(HttpStatus.OK).location(personControllerService.addPerson(person)).build();
+        return ResponseEntity.status(HttpStatus.CREATED).location(personControllerService.addPerson(person)).build();
     }
 
     @DeleteMapping("/{id}")
@@ -39,7 +45,7 @@ public class PersonController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize(("hasRole('ROLE_ADMIN')"))
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Person> updatePerson(@RequestBody Person person) {
         personControllerService.updatePerson(person);
         return ResponseEntity.status(HttpStatus.OK).build();

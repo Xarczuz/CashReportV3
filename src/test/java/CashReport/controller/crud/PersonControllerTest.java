@@ -49,6 +49,13 @@ class PersonControllerTest {
     }
 
     @Test
+    void getPerson() throws Exception {
+        String accessToken = obtainAccessToken("Ankan", "1234");
+        this.mockMvc.perform(get("/person/3").header("Authorization", "Bearer " + accessToken))
+                .andDo(print()).andExpect(status().isOk());
+    }
+
+    @Test
     void addPerson() {
     }
 
