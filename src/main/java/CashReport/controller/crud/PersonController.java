@@ -39,7 +39,7 @@ public class PersonController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize(("hasRole('ROLE_ADMIN')"))
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Person> updatePerson(@RequestBody Person person) {
         personControllerService.updatePerson(person);
         return ResponseEntity.status(HttpStatus.OK).build();
