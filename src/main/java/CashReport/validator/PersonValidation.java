@@ -1,9 +1,7 @@
 package CashReport.validator;
 
 import CashReport.model.Person;
-
 import java.util.function.Function;
-
 import static CashReport.validator.PersonValidation.PersonEnum;
 import static CashReport.validator.PersonValidation.PersonEnum.*;
 
@@ -29,6 +27,13 @@ public interface PersonValidation extends Function<Person, PersonEnum> {
     default PersonValidation emailValidator() {
         return person -> person.getEmail().contains("@") ? SUCCESS : EMAIL_NOT_VALID;
     };
+
+    default PersonValidation and (PersonValidation other){
+        return person -> {
+            PersonValidation.PersonEnum result = this.apply(person);
+            return result.equals(SUCCESS) ? other.apply(person) : result;
+        };
+    }
 
     enum PersonEnum {
         NAME_NOT_VALID,

@@ -32,6 +32,12 @@ public interface CompanyValidation extends Function<Company,CompanyEnum> {
        return company -> company.getZipcode().matches("[0-9 ]+") ? SUCCESS : ZIP_CODE_NOT_VALID;
    }
 
+   default CompanyValidation and (CompanyValidation other){
+       return company -> {
+           CompanyEnum result = this.apply(company);
+           return result.equals(SUCCESS) ? other.apply(company) : result;
+       };
+   }
 
     enum CompanyEnum {
         ORGANISATION_NUMBER_NOT_VALID,
