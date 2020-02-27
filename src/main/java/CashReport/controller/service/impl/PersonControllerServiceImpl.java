@@ -38,7 +38,7 @@ public class PersonControllerServiceImpl implements
 
     @Override
     public Person updatePerson(Person person) {
-        Person person1 = personRepo.getOne(person.getCompanyid());
+        Person person1 = personRepo.getOne(person.getPersonid());
         person1.setRoleid(person.getRoleid());
         person1.setCompanyid(person.getCompanyid());
         person1.setFirstname(person.getFirstname());
