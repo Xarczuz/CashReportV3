@@ -1,17 +1,22 @@
 package CashReport.controller.crud;
 
+import CashReport.model.Company;
 import CashReport.model.Person;
 import CashReport.repository.PersonRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("person")
 public class PersonController {
+
     @Autowired
     PersonRepo personRepo;
 
@@ -23,8 +28,11 @@ public class PersonController {
 
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Person addPerson(@RequestBody Person person) {
-        return personRepo.save(person);
+    public ResponseEntity<Person> addPerson(@RequestBody Person person) {
+        Person tmpPerson = personRepo.save(person);
+        String template = "/person/{id}";
+        UriComponents uriComponents = UriComponentsBuilder.fromUriString(template).buildAndExpand(tmpPerson.getPersonid());
+        return ResponseEntity.created(uriComponents.toUri()).build();
     }
 
     @DeleteMapping("/{id}")

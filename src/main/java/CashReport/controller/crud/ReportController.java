@@ -3,8 +3,11 @@ package CashReport.controller.crud;
 import CashReport.model.Report;
 import CashReport.repository.ReportRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -17,8 +20,11 @@ public class ReportController {
 
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void addReport(Report report) {
-        reportRepo.save(report);
+    public ResponseEntity<Report> addReport(Report report) {
+        Report tmpReport = reportRepo.save(report);
+        String template = "/report/{id}";
+        UriComponents uriComponents = UriComponentsBuilder.fromUriString(template).buildAndExpand(tmpReport.getReportid());
+        return ResponseEntity.created(uriComponents.toUri()).build();
     }
 
     @GetMapping("/{id}")
@@ -30,14 +36,12 @@ public class ReportController {
     @GetMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Report> getAllReports() {
-
         return reportRepo.findAll();
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteReport(@PathVariable("id") int id) {
-
         reportRepo.deleteById(id);
     }
 

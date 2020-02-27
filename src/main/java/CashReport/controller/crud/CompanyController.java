@@ -3,21 +3,30 @@ package CashReport.controller.crud;
 import CashReport.model.Company;
 import CashReport.repository.CompanyRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
 @RequestMapping("company")
 public class CompanyController {
+
     @Autowired
     CompanyRepo companyRepo;
 
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void addCompany() {
-
+    public ResponseEntity<Company> addCompany(@RequestBody Company company) {
+        Company tmpCompany = companyRepo.save(company);
+        String template = "/company/{id}";
+        UriComponents uriComponents = UriComponentsBuilder.fromUriString(template).buildAndExpand(tmpCompany.getCompanyid());
+        return ResponseEntity.created(uriComponents.toUri()).build();
     }
 
     @GetMapping("")
