@@ -1,8 +1,7 @@
 package CashReport.controller.crud;
 
-import CashReport.controller.service.ReportControllerService;
+import CashReport.controller.service.impl.ReportControllerServiceImpl;
 import CashReport.model.Report;
-import CashReport.repository.ReportRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +17,12 @@ import java.util.List;
 public class ReportController {
 
     @Autowired
-    ReportControllerService reportControllerService;
+    ReportControllerServiceImpl reportControllerServiceImpl;
 
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Report> addReport(Report report) {
-        Report tmpReport = reportControllerService.addReport(report);
+        Report tmpReport = reportControllerServiceImpl.addReport(report);
         String template = "/report/{id}";
         UriComponents uriComponents = UriComponentsBuilder.fromUriString(template).buildAndExpand(tmpReport.getReportid());
         return ResponseEntity.created(uriComponents.toUri()).build();
@@ -32,26 +31,26 @@ public class ReportController {
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Report> getReport(@PathVariable("id") int id) {
-        return ResponseEntity.status(HttpStatus.OK).body(reportControllerService.getReport(id));
+        return ResponseEntity.status(HttpStatus.OK).body(reportControllerServiceImpl.getReport(id));
     }
 
     @GetMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<Report>> getAllReports() {
-        return ResponseEntity.status(HttpStatus.OK).body(reportControllerService.getAllReports());
+        return ResponseEntity.status(HttpStatus.OK).body(reportControllerServiceImpl.getAllReports());
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteReport(@PathVariable("id") int id) {
-        reportControllerService.deleteReport(id);
+        reportControllerServiceImpl.deleteReport(id);
     }
 
     @PutMapping("")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void updateReport(@RequestBody Report report) {
-        reportControllerService.updateReport(report);
+        reportControllerServiceImpl.updateReport(report);
     }
 }

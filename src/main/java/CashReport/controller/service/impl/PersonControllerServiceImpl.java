@@ -1,11 +1,14 @@
-package CashReport.controller.service;
+package CashReport.controller.service.impl;
 
+import CashReport.controller.service.PersonControllerService;
 import CashReport.model.Person;
 import CashReport.repository.PersonRepo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.stream.Stream;
 
 @Service
 public class PersonControllerServiceImpl implements PersonControllerService {
@@ -40,6 +43,9 @@ public class PersonControllerServiceImpl implements PersonControllerService {
         person1.setPassword(person.getPassword());
         person1.setUsername(person.getUsername());
         person1.setSalt(person.getSalt());
+
+
+
 
         return personRepo.save(person1);
     }

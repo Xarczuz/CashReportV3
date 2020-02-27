@@ -1,6 +1,6 @@
 package CashReport.controller.crud;
 
-import CashReport.controller.service.PersonControllerServiceImpl;
+import CashReport.controller.service.impl.PersonControllerServiceImpl;
 import CashReport.model.Person;
 import CashReport.repository.PersonRepo;
 import org.springframework.beans.factory.annotation.Autowired;
