@@ -3,15 +3,14 @@ package CashReport.controller.service.impl;
 import CashReport.controller.service.PersonControllerService;
 import CashReport.model.Person;
 import CashReport.repository.PersonRepo;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.stream.Stream;
+import java.util.List;
 
 @Service
-public class PersonControllerServiceImpl implements PersonControllerService {
+public class PersonControllerServiceImpl implements  PersonControllerService {
   
 
     private PersonRepo personRepo;
@@ -21,6 +20,7 @@ public class PersonControllerServiceImpl implements PersonControllerService {
     }
 
 
+    
 
     @Override
     public  UriComponents addPerson(Person person) {
@@ -29,6 +29,17 @@ public class PersonControllerServiceImpl implements PersonControllerService {
         UriComponents uriComponents = UriComponentsBuilder.fromUriString(template).buildAndExpand(tmpPerson.getPersonid());
         return  uriComponents;
     }
+
+
+    @Override
+    public List<Person> getAllPerson() {
+        return personRepo.findAll();
+    }
+    
+
+    @Override
+    public void deletePerson(int id) {personRepo.deleteById(id);}
+    
 
     @Override
     public Person updatePerson(Person person) {

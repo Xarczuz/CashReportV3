@@ -1,6 +1,6 @@
 package CashReport.controller.crud;
 
-import CashReport.controller.service.impl.PersonControllerServiceImpl;
+import CashReport.controller.service.PersonControllerService;
 import CashReport.model.Person;
 import CashReport.repository.PersonRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public class PersonController {
     @Autowired
     PersonRepo personRepo;
     @Autowired
-    PersonControllerServiceImpl personControllerServiceImpl;
+    PersonControllerService personControllerService;
 
     @GetMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -27,7 +27,7 @@ public class PersonController {
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Person> addPerson(@RequestBody Person person) {
-        return ResponseEntity.created(personControllerServiceImpl.addPerson(person).toUri()).build();
+        return ResponseEntity.created(personControllerService.addPerson(person).toUri()).build();
     }
 
     @DeleteMapping("/{id}")
@@ -39,6 +39,6 @@ public class PersonController {
     @PutMapping("/{id}")
     @PreAuthorize(("hasRole('ROLE_ADMIN')"))
     public Person updatePerson(@RequestBody Person person) {
-        return personControllerServiceImpl.updatePerson(person);
+        return personControllerService.updatePerson(person);
     }
 }
