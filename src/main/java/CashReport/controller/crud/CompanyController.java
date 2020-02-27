@@ -31,7 +31,7 @@ public class CompanyController {
 
     @GetMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<Company> getAllCompanies() {
+    public List<Company> getAllCompanies( ) {
         return companyRepo.findAll();
     }
 
