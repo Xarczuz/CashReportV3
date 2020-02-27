@@ -1,5 +1,6 @@
 package CashReport.controller.crud;
 
+import CashReport.controller.service.CompanyControllerService;
 import CashReport.model.Company;
 import CashReport.repository.CompanyRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,12 @@ import java.util.List;
 public class CompanyController {
 
     @Autowired
-    CompanyRepo companyRepo;
+    CompanyControllerService companyControllerService;
 
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Company> addCompany(@RequestBody Company company) {
-        Company tmpCompany = companyRepo.save(company);
+        Company tmpCompany = companyControllerService.addCompany(company);
         String template = "/company/{id}";
         UriComponents uriComponents = UriComponentsBuilder.fromUriString(template).buildAndExpand(tmpCompany.getCompanyid());
         return ResponseEntity.created(uriComponents.toUri()).build();
@@ -31,31 +32,27 @@ public class CompanyController {
 
     @GetMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<Company> getAllCompanies( ) {
-        return companyRepo.findAll();
+    public ResponseEntity<List<Company>> getAllCompanies() {
+        return ResponseEntity.status(HttpStatus.OK).body(companyControllerService.getAllCompanies());
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Company getCompany(@PathVariable("id") int id) {
-        return companyRepo.findById(id).get();
+    public ResponseEntity<Company> getCompany(@PathVariable("id") int id) {
+        return ResponseEntity.status(HttpStatus.OK).body(companyControllerService.getCompany(id));
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteCompany(@PathVariable("id") int id) {
-        companyRepo.deleteById(id);
+        companyControllerService.deleteCompany(id);
     }
 
     @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void updateCompany(@RequestBody Company company) {
-        Company companyOne = companyRepo.getOne(company.getCompanyid());
-        companyOne.setCompany(company.getCompany());
-        companyOne.setOrgnr(company.getOrgnr());
-        companyOne.setStreet(company.getStreet());
-        companyOne.setCity(company.getCity());
-        companyOne.setZipcode(company.getZipcode());
-        companyRepo.save(companyOne);
+        companyControllerService.updateCompany(company);
     }
 }
