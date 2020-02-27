@@ -21,7 +21,7 @@ public class PersonController {
     @GetMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Person> getAllPerson() {
-        return personRepo.findAll();
+        return personControllerService.getAllPerson();
     }
 
     @PostMapping("")
@@ -32,9 +32,7 @@ public class PersonController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deletePerson(@PathVariable("id") int id) {
-        personRepo.deleteById(id);
-    }
+    public void deletePerson(@PathVariable("id") int id) { personControllerService.deletePerson(id);}
 
     @PutMapping("/{id}")
     @PreAuthorize(("hasRole('ROLE_ADMIN')"))

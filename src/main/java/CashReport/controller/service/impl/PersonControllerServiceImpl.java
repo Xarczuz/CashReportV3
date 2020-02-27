@@ -10,7 +10,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 @Service
-public class PersonControllerServiceImpl implements  PersonControllerService {
+public class PersonControllerServiceImpl implements
+        PersonControllerService {
   
 
     private PersonRepo personRepo;
