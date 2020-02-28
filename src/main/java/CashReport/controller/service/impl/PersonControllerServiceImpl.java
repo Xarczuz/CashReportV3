@@ -8,6 +8,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class PersonControllerServiceImpl implements
@@ -53,7 +54,9 @@ public class PersonControllerServiceImpl implements
     }
 
     @Override
-    public Person getPerson(int id) {
-        return personRepo.findById(id).get();
+    public Person getPerson(int id) throws NoSuchElementException {
+
+        return personRepo.findById(id).orElseThrow(NoSuchElementException::new);
+
     }
 }

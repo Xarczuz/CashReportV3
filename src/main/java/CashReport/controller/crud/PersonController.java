@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("person")
@@ -28,7 +29,11 @@ public class PersonController {
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Person> getPerson(@PathVariable("id") int id) {
-        return ResponseEntity.status(HttpStatus.OK).body(personControllerService.getPerson(id));
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(personControllerService.getPerson(id));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
     }
 
     @PostMapping("")
