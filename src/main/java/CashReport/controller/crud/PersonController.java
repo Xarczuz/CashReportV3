@@ -49,7 +49,7 @@ public class PersonController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Person> updatePerson(@RequestBody Person person) {
         personControllerService.updatePerson(person);
