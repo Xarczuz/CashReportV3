@@ -98,7 +98,7 @@ class PersonControllerTest {
         String personJson = "{\"roleid\":3,\"companyid\":0,\"firstname\":\"Kalleas\",\"lastname\":\"adAnka\",\"email\":\"fakalle@gmail.com\",\"phonenr\":\"1045234543\",\"password\":\"1234\",\"username\":\"a\",\"salt\":\"4456\"}";
         String personJsonUpdate = "{\"roleid\":3,\"companyid\":0,\"firstname\":\"Sara\",\"lastname\":\"Medina\",\"email\":\"fgse@gmail.com\",\"phonenr\":\"1042345234543\",\"password\":\"12\",\"username\":\"ba\",\"salt\":\"4456\"}";
 
-        //Put
+        //Post
         String location = mockMvc.perform(post("/person")
                 .header("Authorization", "Bearer " + accessToken)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -122,7 +122,7 @@ class PersonControllerTest {
 
         JSONObject jsonObjectWithId = new JSONObject(personJsonUpdate);
         String personJsonUpdateWithId = jsonObjectWithId.put("personid", idToUpdate).toString();
-        //Update
+        //Put
         mockMvc.perform(put("/person")
                 .header("Authorization", "Bearer " + accessToken)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -140,5 +140,19 @@ class PersonControllerTest {
                 .header("Authorization", "Bearer " + accessToken)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void givenToken_whenPostBadDataSecureRequest_thenOk() throws Exception {
+        String accessToken = obtainAccessToken("Ankan", "1234");
+        String personJson = "{\"rolid\":3,\"copanyid\":0,\"firstnae\":\"Kalles\",\"lasname\":\"adAka\",\"emil\":\"fakalle@gmail.com\",\"phonenr\":\"1045234543\",\"password\":\"1234\",\"username\":\"a\",\"salt\":\"4456\"}";
+
+        //Post
+        mockMvc.perform(post("/person")
+                .header("Authorization", "Bearer " + accessToken)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(personJson))
+                .andExpect(status().isBadRequest());
+
     }
 }

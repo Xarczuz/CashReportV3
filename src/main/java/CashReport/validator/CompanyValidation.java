@@ -1,14 +1,14 @@
 package CashReport.validator;
 
 import CashReport.model.Company;
+
 import java.util.function.Function;
+
 import static CashReport.validator.CompanyValidation.CompanyEnum;
 import static CashReport.validator.CompanyValidation.CompanyEnum.*;
 
 
 public interface CompanyValidation extends Function<Company,CompanyEnum> {
-
-
 
    default CompanyValidation checkOrgNrValidator(){
        return company -> company.getOrgnr() > 0 ? SUCCESS : ORGANISATION_NUMBER_NOT_VALID;

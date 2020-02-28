@@ -3,6 +3,7 @@ package CashReport.controller.service.impl;
 import CashReport.controller.service.PersonControllerService;
 import CashReport.model.Person;
 import CashReport.repository.PersonRepo;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -21,7 +22,7 @@ public class PersonControllerServiceImpl implements
     }
 
     @Override
-    public URI addPerson(Person person) {
+    public URI addPerson(Person person) throws DataIntegrityViolationException {
         Person tmpPerson = personRepo.save(person);
         String template = "/person/{id}";
         return UriComponentsBuilder.fromUriString(template).buildAndExpand(tmpPerson.getPersonid()).toUri();
@@ -49,7 +50,6 @@ public class PersonControllerServiceImpl implements
         person1.setPassword(person.getPassword());
         person1.setUsername(person.getUsername());
         person1.setSalt(person.getSalt());
-
         return personRepo.save(person1);
     }
 

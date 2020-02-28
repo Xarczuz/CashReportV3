@@ -2,6 +2,7 @@ package CashReport.controller.crud;
 
 import CashReport.controller.service.PersonControllerService;
 import CashReport.model.Person;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,7 +40,12 @@ public class PersonController {
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Person> addPerson(@RequestBody Person person) {
-        return ResponseEntity.status(HttpStatus.CREATED).location(personControllerService.addPerson(person)).build();
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).location(personControllerService.addPerson(person)).build();
+
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
     @DeleteMapping("/{id}")
