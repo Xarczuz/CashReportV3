@@ -2,17 +2,18 @@ package CashReport.validator;
 
 import CashReport.model.Person;
 import org.junit.jupiter.api.Test;
+
 import static CashReport.validator.PersonValidation.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PersonValidationTest {
     @Test
-    void personNameValid(){
+    void personNameValid() {
         Person personName = new Person();
         personName.setFirstname("Erik-Ddaniel");
         PersonEnum result = nameValidator().apply(personName);
 
-        assertEquals(PersonEnum.SUCCESS,result);
+        assertEquals(PersonEnum.SUCCESS, result);
     }
 
     @Test
@@ -25,7 +26,7 @@ class PersonValidationTest {
     }
 
     @Test
-    void personLastnameNotValid(){
+    void personLastnameNotValid() {
         Person personLastName = new Person();
         personLastName.setLastname("Hedman-1kdasjdkasjdkjdiasjdkjaskldjkasdjlasjdlkjasbgfdshfjkjkasjdklasjdkljasdkljasdjasdasadsada");
         PersonEnum result = lastNameValidator().apply(personLastName);
@@ -34,7 +35,7 @@ class PersonValidationTest {
     }
 
     @Test
-    void personLastnameValid(){
+    void personLastnameValid() {
         Person personLastName = new Person();
         personLastName.setLastname("Hedman");
         PersonEnum result = lastNameValidator().apply(personLastName);
@@ -43,7 +44,7 @@ class PersonValidationTest {
     }
 
     @Test
-    void usernameValid(){
+    void usernameValid() {
         Person personUsername = new Person();
         personUsername.setUsername("hedman");
         PersonEnum result = usernameValidator().apply(personUsername);
@@ -51,7 +52,8 @@ class PersonValidationTest {
         assertEquals(PersonEnum.SUCCESS, result);
     }
 
-    @Test void usernameNotValid(){
+    @Test
+    void usernameNotValid() {
         Person personUsername = new Person();
         personUsername.setUsername("Hedman!");
         PersonEnum result = usernameValidator().apply(personUsername);
@@ -59,7 +61,8 @@ class PersonValidationTest {
         assertEquals(PersonEnum.USERNAME_NOT_VALID, result);
     }
 
-    @Test void phoneNumberValid(){
+    @Test
+    void phoneNumberValid() {
         Person personPhoneNumber = new Person();
         personPhoneNumber.setPhonenr("070-5593300");
         PersonEnum result = phoneNumberValidator().apply(personPhoneNumber);
@@ -67,7 +70,8 @@ class PersonValidationTest {
         assertEquals(PersonEnum.SUCCESS, result);
     }
 
-    @Test void phoneNumberNotValid(){
+    @Test
+    void phoneNumberNotValid() {
         Person personPhoneNumber = new Person();
         personPhoneNumber.setPhonenr("07055995_");
         PersonEnum result = phoneNumberValidator().apply(personPhoneNumber);
@@ -77,7 +81,7 @@ class PersonValidationTest {
 
 
     @Test
-    void personValidation(){
+    void personValidation() {
         Person erikHedman = new Person();
         erikHedman.setFirstname("Erik");
         erikHedman.setLastname("Hedman");
@@ -97,10 +101,8 @@ class PersonValidationTest {
                 .and(emailValidator())
                 .apply(erikHedman);
 
-        assertEquals(PersonEnum.SUCCESS,result);
+        assertEquals(PersonEnum.SUCCESS, result);
     }
-
-
 
 
 }
