@@ -8,7 +8,7 @@ public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int companyid;
-    private int orgnr;
+    private String orgnr;
     private String company;
     private String street;
     private String city;
@@ -34,11 +34,11 @@ public class Company {
         this.companyid = companyid;
     }
 
-    public int getOrgnr() {
+    public String getOrgnr() {
         return orgnr;
     }
 
-    public void setOrgnr(int orgnr) {
+    public void setOrgnr(String orgnr) {
         this.orgnr = orgnr;
     }
 

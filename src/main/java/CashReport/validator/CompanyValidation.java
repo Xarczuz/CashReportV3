@@ -1,43 +1,42 @@
 package CashReport.validator;
 
 import CashReport.model.Company;
+
 import java.util.function.Function;
+
 import static CashReport.validator.CompanyValidation.CompanyEnum;
 import static CashReport.validator.CompanyValidation.CompanyEnum.*;
 
 
-public interface CompanyValidation extends Function<Company,CompanyEnum> {
+public interface CompanyValidation extends Function<Company, CompanyEnum> {
 
 
+    static CompanyValidation checkOrgNrValidator() {
+        return company -> company.getOrgnr().matches("([5]\\d{5}[-]\\d{4})|([5]\\d{9})") ? SUCCESS : ORGANISATION_NUMBER_NOT_VALID;
+    }
 
-   default CompanyValidation checkOrgNrValidator(){
-       return company -> company.getOrgnr() > 0 ? SUCCESS : ORGANISATION_NUMBER_NOT_VALID;
-   };
+    static CompanyValidation companyNameValidator() {
+        return company -> company.getCompany().matches("^((?![\\^!@#$*~ <>?]).)((?![\\^!@#$*~<>?]).){0,73}((?![\\^!@#$*~ <>?]).)$") ? SUCCESS : COMPANY_NAME_NOT_VALID;
+    }
 
-   default CompanyValidation companyNameValidator(){
-       return company -> company.getCompany().length() > 50 ? SUCCESS : COMPANY_NAME_NOT_VALID;
-   }
+    static CompanyValidation streetNameValidator() {
+        return company -> company.getStreet().matches("^[a-zåäöA-ZÅÄÖ0-9, ]{4,50}") ? SUCCESS : STREET_NOT_VALID;
+    }
 
-   default CompanyValidation streetNameValidator(){
-       return company -> {
-           return company.getStreet().matches("[a-zA-Z].+") ? SUCCESS: STREET_NOT_VALID; //Regex check if first char is a letter
-       };
-   }
+    static CompanyValidation cityNameValidation() {
+        return company -> company.getCity().matches("[a-zA-Z]+(?:[ '-][a-zA-Z]+)*") ? SUCCESS : CITY_NOT_VALID;
+    }
 
-   default CompanyValidation cityValidation(){
-       return company -> company.getCity().matches("[a-zA-Z]") ? SUCCESS : CITY_NOT_VALID;
-   }
+    static CompanyValidation zipcodeValidation() {
+        return company -> company.getZipcode().matches("^\\d{5}|\\d{3}[- ]\\d{2}") ? SUCCESS : ZIP_CODE_NOT_VALID;//Bara Svenska PostNr.
+    }
 
-   default CompanyValidation zipcodeValidation(){
-       return company -> company.getZipcode().matches("[0-9 ]+") ? SUCCESS : ZIP_CODE_NOT_VALID;
-   }
-
-   default CompanyValidation and (CompanyValidation other){
-       return company -> {
-           CompanyEnum result = this.apply(company);
-           return result.equals(SUCCESS) ? other.apply(company) : result;
-       };
-   }
+    default CompanyValidation and(CompanyValidation other) {
+        return company -> {
+            CompanyEnum result = this.apply(company);
+            return result.equals(SUCCESS) ? other.apply(company) : result;
+        };
+    }
 
     enum CompanyEnum {
         ORGANISATION_NUMBER_NOT_VALID,
