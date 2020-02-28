@@ -8,24 +8,24 @@ import static CashReport.validator.PersonValidation.PersonEnum.*;
 public interface PersonValidation extends Function<Person, PersonEnum> {
 
 
-    default PersonValidation nameValidator() {
-        return person -> person.getFirstname().matches("[a-zA-]") ? SUCCESS : NAME_NOT_VALID;
+    static PersonValidation nameValidator() {
+        return person -> person.getFirstname().matches("[A-Z][a-zA-Z][^#&<>\\\"~;$^%{}?]{1,50}$") ? SUCCESS : NAME_NOT_VALID;
     };
 
-    default PersonValidation lastNameValidator() {
-        return person -> person.getLastname().matches("[a-zA-]") ? SUCCESS : LASTNAME_NOT_VALID;
+    static PersonValidation lastNameValidator() {
+        return person -> person.getLastname().matches("[A-Z][a-zA-Z][^#&<>\\\"~;$^%{}?]{1,50}$") ? SUCCESS : LASTNAME_NOT_VALID;
     };
 
-    default PersonValidation phoneNumberValidator() {
-        return person -> person.getPhonenr().matches("[0-9]*") ? SUCCESS : NUMBER_NOT_VALID;
+    static PersonValidation phoneNumberValidator() {
+        return person -> person.getPhonenr().matches("^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$") ? SUCCESS : NUMBER_NOT_VALID;
     };
 
-    default PersonValidation usernameValidator() {
-        return person -> person.getUsername().length() > 50 ? SUCCESS : USERNAME_NOT_VALID;
+    static PersonValidation usernameValidator() {
+        return person -> person.getUsername().matches("^[a-z0-9_-]{3,50}$") ? SUCCESS : USERNAME_NOT_VALID;
     };
 
-    default PersonValidation emailValidator() {
-        return person -> person.getEmail().contains("@") ? SUCCESS : EMAIL_NOT_VALID;
+    static PersonValidation emailValidator() {
+        return person -> person.getEmail().matches("^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$") ? SUCCESS : EMAIL_NOT_VALID;
     };
 
     default PersonValidation and (PersonValidation other){
