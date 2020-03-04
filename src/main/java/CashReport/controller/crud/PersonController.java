@@ -40,9 +40,9 @@ public class PersonController {
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Person> addPerson(@RequestBody Person person) {
+        personControllerService.addPerson(person);
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).location(personControllerService.addPerson(person)).build();
-
+            return ResponseEntity.status(HttpStatus.OK).body(personControllerService.getPerson(person.getPersonid()));
         } catch (DataIntegrityViolationException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -51,6 +51,7 @@ public class PersonController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Person> deletePerson(@PathVariable("id") int id) {
+        System.out.println(id);
         personControllerService.deletePerson(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
