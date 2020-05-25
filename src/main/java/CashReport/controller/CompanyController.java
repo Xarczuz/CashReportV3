@@ -1,7 +1,7 @@
-package CashReport.controller.crud;
+package CashReport.controller;
 
-import CashReport.controller.service.impl.CompanyControllerServiceImpl;
-import CashReport.model.Company;
+import CashReport.model.tables.Company;
+import CashReport.service.impl.CompanyControllerServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

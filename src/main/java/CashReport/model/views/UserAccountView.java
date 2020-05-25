@@ -1,4 +1,4 @@
-package CashReport.model;
+package CashReport.model.views;
 
 import org.hibernate.annotations.Immutable;
 

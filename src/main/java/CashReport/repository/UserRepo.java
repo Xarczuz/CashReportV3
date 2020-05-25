@@ -1,6 +1,6 @@
 package CashReport.repository;
 
-import CashReport.model.UserAccountView;
+import CashReport.model.views.UserAccountView;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

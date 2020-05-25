@@ -1,7 +1,7 @@
-package CashReport.controller.crud;
+package CashReport.controller;
 
-import CashReport.controller.service.impl.ReportControllerServiceImpl;
-import CashReport.model.Report;
+import CashReport.model.tables.Report;
+import CashReport.service.impl.ReportControllerServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,8 +21,9 @@ public class ReportController {
         this.reportControllerServiceImpl = reportControllerServiceImpl;
     }
 
+    //    @PreAuthorize("hasAnyRole('[ROLE_ADMIN,ROLE_EMPLOYEE]')")
     @PostMapping("")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
     public ResponseEntity<Report> addReport(Report report) {
         Report tmpReport = reportControllerServiceImpl.addReport(report);
         String template = "/report/{id}";
@@ -31,13 +32,13 @@ public class ReportController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
     public ResponseEntity<Report> getReport(@PathVariable("id") int id) {
         return ResponseEntity.status(HttpStatus.OK).body(reportControllerServiceImpl.getReport(id));
     }
 
     @GetMapping("")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
     public ResponseEntity<List<Report>> getAllReports() {
         return ResponseEntity.status(HttpStatus.OK).body(reportControllerServiceImpl.getAllReports());
     }

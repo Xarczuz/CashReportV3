@@ -1,14 +1,17 @@
-package CashReport.model;
+package CashReport.model.views;
+
+import org.hibernate.annotations.Immutable;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
 
 @Entity
-public class Person {
+@Table(name = "personview")
+@Immutable
+public class PersonView {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int personid;
     private int roleid;
     private int companyid;
@@ -16,13 +19,11 @@ public class Person {
     private String lastname;
     private String email;
     private String phonenr;
-    private String password;
     private String username;
-    private String salt;
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "PersonView{" +
                 "personid=" + personid +
                 ", roleid=" + roleid +
                 ", companyid=" + companyid +
@@ -30,9 +31,7 @@ public class Person {
                 ", lastname='" + lastname + '\'' +
                 ", email='" + email + '\'' +
                 ", phonenr='" + phonenr + '\'' +
-                ", password='" + password + '\'' +
                 ", username='" + username + '\'' +
-                ", salt='" + salt + '\'' +
                 '}';
     }
 
@@ -92,14 +91,6 @@ public class Person {
         this.phonenr = phonenr;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -107,13 +98,4 @@ public class Person {
     public void setUsername(String username) {
         this.username = username;
     }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
 }
-

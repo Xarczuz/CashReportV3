@@ -1,4 +1,4 @@
-package CashReport.model;
+package CashReport.model.tables;
 
 import javax.persistence.*;
 

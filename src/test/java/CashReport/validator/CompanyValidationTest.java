@@ -1,6 +1,6 @@
 package CashReport.validator;
 
-import CashReport.model.Company;
+import CashReport.model.tables.Company;
 import org.junit.jupiter.api.Test;
 
 import static CashReport.validator.CompanyValidation.*;

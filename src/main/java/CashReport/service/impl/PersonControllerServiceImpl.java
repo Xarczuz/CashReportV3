@@ -1,9 +1,12 @@
-package CashReport.controller.service.impl;
+package CashReport.service.impl;
 
-import CashReport.controller.service.PersonControllerService;
-import CashReport.model.Person;
+import CashReport.model.tables.Person;
+import CashReport.model.views.PersonView;
 import CashReport.repository.PersonRepo;
+import CashReport.repository.PersonViewRepo;
+import CashReport.service.PersonControllerService;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -16,21 +19,28 @@ public class PersonControllerServiceImpl implements
         PersonControllerService {
 
     private final PersonRepo personRepo;
+    private final PersonViewRepo personViewRepo;
+    private final PasswordEncoder passwordEncoder;
 
-    public PersonControllerServiceImpl(PersonRepo personRepo) {
+
+    public PersonControllerServiceImpl(PersonRepo personRepo, PersonViewRepo personViewRepo, PasswordEncoder passwordEncoder) {
         this.personRepo = personRepo;
+        this.personViewRepo = personViewRepo;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public URI addPerson(Person person) throws DataIntegrityViolationException {
+        String encryptedPassword = passwordEncoder.encode(person.getPassword());
+        person.setPassword(encryptedPassword);
         Person tmpPerson = personRepo.save(person);
         String template = "/person/{id}";
         return UriComponentsBuilder.fromUriString(template).buildAndExpand(tmpPerson.getPersonid()).toUri();
     }
 
     @Override
-    public List<Person> getAllPerson() {
-        return personRepo.findAll();
+    public List<PersonView> getAllPerson() {
+        return personViewRepo.findAll();
     }
 
     @Override
@@ -47,16 +57,14 @@ public class PersonControllerServiceImpl implements
         person1.setLastname(person.getLastname());
         person1.setEmail(person.getEmail());
         person1.setPhonenr(person.getPhonenr());
-        person1.setPassword(person.getPassword());
+        //person1.setPassword(person.getPassword());
         person1.setUsername(person.getUsername());
-        person1.setSalt(person.getSalt());
+        //person1.setSalt(person.getSalt());
         return personRepo.save(person1);
     }
 
     @Override
-    public Person getPerson(int id) throws NoSuchElementException {
-
-        return personRepo.findById(id).orElseThrow(NoSuchElementException::new);
-
+    public PersonView getPerson(int id) throws NoSuchElementException {
+        return personViewRepo.findById(id).orElseThrow(NoSuchElementException::new);
     }
 }

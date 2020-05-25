@@ -1,9 +1,8 @@
-package CashReport.controller.view;
+package CashReport.controller;
 
-import CashReport.model.Role;
+import CashReport.model.tables.Role;
 import CashReport.repository.RoleRepo;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

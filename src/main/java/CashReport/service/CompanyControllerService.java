@@ -1,6 +1,6 @@
-package CashReport.controller.service;
+package CashReport.service;
 
-import CashReport.model.Company;
+import CashReport.model.tables.Company;
 
 import java.util.List;
 

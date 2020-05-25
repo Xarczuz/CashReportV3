@@ -1,7 +1,9 @@
 package CashReport.validator;
 
-import CashReport.model.Person;
+import CashReport.model.tables.Person;
+
 import java.util.function.Function;
+
 import static CashReport.validator.PersonValidation.PersonEnum;
 import static CashReport.validator.PersonValidation.PersonEnum.*;
 

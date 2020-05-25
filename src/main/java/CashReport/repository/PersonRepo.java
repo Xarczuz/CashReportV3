@@ -1,6 +1,6 @@
 package CashReport.repository;
 
-import CashReport.model.Person;
+import CashReport.model.tables.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

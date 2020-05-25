@@ -1,6 +1,6 @@
 package CashReport.validator;
 
-import CashReport.model.Person;
+import CashReport.model.tables.Person;
 import org.junit.jupiter.api.Test;
 
 import static CashReport.validator.PersonValidation.*;

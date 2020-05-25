@@ -1,8 +1,8 @@
-package CashReport.controller.service.impl;
+package CashReport.service.impl;
 
-import CashReport.controller.service.CompanyControllerService;
-import CashReport.model.Company;
+import CashReport.model.tables.Company;
 import CashReport.repository.CompanyRepo;
+import CashReport.service.CompanyControllerService;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;

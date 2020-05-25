@@ -1,6 +1,6 @@
 package CashReport.validator;
 
-import CashReport.model.Company;
+import CashReport.model.tables.Company;
 
 import java.util.function.Function;
 

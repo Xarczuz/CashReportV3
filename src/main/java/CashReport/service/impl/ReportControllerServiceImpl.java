@@ -1,8 +1,8 @@
-package CashReport.controller.service.impl;
+package CashReport.service.impl;
 
-import CashReport.controller.service.ReportControllerService;
-import CashReport.model.Report;
+import CashReport.model.tables.Report;
 import CashReport.repository.ReportRepo;
+import CashReport.service.ReportControllerService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

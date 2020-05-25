@@ -1,7 +1,8 @@
-package CashReport.controller.crud;
+package CashReport.controller;
 
-import CashReport.controller.service.PersonControllerService;
-import CashReport.model.Person;
+import CashReport.model.tables.Person;
+import CashReport.model.views.PersonView;
+import CashReport.service.PersonControllerService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +24,13 @@ public class PersonController {
 
     @GetMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<List<Person>> getAllPerson() {
+    public ResponseEntity<List<PersonView>> getAllPerson() {
         return ResponseEntity.status(HttpStatus.OK).body(personControllerService.getAllPerson());
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<Person> getPerson(@PathVariable("id") int id) {
+    public ResponseEntity<PersonView> getPerson(@PathVariable("id") int id) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(personControllerService.getPerson(id));
         } catch (NoSuchElementException e) {
@@ -39,9 +40,9 @@ public class PersonController {
 
     @PostMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<Person> addPerson(@RequestBody Person person) {
-        personControllerService.addPerson(person);
+    public ResponseEntity<PersonView> addPerson(@RequestBody Person person) {
         try {
+            personControllerService.addPerson(person);
             return ResponseEntity.status(HttpStatus.OK).body(personControllerService.getPerson(person.getPersonid()));
         } catch (DataIntegrityViolationException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -62,4 +63,6 @@ public class PersonController {
         personControllerService.updatePerson(person);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+
 }

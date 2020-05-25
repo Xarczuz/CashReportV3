@@ -1,6 +1,7 @@
-package CashReport.controller.service;
+package CashReport.service;
 
-import CashReport.model.Person;
+import CashReport.model.tables.Person;
+import CashReport.model.views.PersonView;
 
 import java.net.URI;
 import java.util.List;
@@ -8,11 +9,11 @@ import java.util.List;
 public interface PersonControllerService {
     URI addPerson(Person person);
 
-    List<Person> getAllPerson();
+    List<PersonView> getAllPerson();
 
     void deletePerson(int id);
 
     Person updatePerson(Person person);
 
-    Person getPerson(int id);
+    PersonView getPerson(int id);
 }

@@ -1,7 +1,6 @@
 package CashReport.repository;
 
-import CashReport.model.Report;
-import CashReport.model.Role;
+import CashReport.model.tables.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;
