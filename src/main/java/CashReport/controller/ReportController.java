@@ -24,7 +24,7 @@ public class ReportController {
     //    @PreAuthorize("hasAnyRole('[ROLE_ADMIN,ROLE_EMPLOYEE]')")
     @PostMapping("")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')")
-    public ResponseEntity<Report> addReport(Report report) {
+    public ResponseEntity<Report> addReport(@RequestBody Report report) {
         Report tmpReport = reportControllerServiceImpl.addReport(report);
         String template = "/report/{id}";
         UriComponents uriComponents = UriComponentsBuilder.fromUriString(template).buildAndExpand(tmpReport.getReportid());
